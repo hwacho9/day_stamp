@@ -1,16 +1,17 @@
+// File: weather_selector.dart
 import 'package:flutter/material.dart';
 
-class MoodSelector extends StatefulWidget {
-  final void Function(String) onMoodSelected;
+class WeatherSelector extends StatefulWidget {
+  final void Function(String) onWeatherSelected;
 
-  const MoodSelector({super.key, required this.onMoodSelected});
+  const WeatherSelector({super.key, required this.onWeatherSelected});
 
   @override
-  State<MoodSelector> createState() => _MoodSelectorState();
+  State<WeatherSelector> createState() => _WeatherSelectorState();
 }
 
-class _MoodSelectorState extends State<MoodSelector> {
-  String _selectedMood = '';
+class _WeatherSelectorState extends State<WeatherSelector> {
+  String _selectedWeather = '';
 
   @override
   Widget build(BuildContext context) {
@@ -24,24 +25,23 @@ class _MoodSelectorState extends State<MoodSelector> {
       ),
       child: Column(
         children: [
-          const Text('오늘의 기분',
+          const Text('오늘의 날씨',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <String>['😊', '😢', '😠', '😍'].map((String mood) {
+            children: <String>['☀️', '🌧', '⛅️', '❄️'].map((String weather) {
               return GestureDetector(
                 onTap: () {
                   setState(() {
-                    _selectedMood = mood;
+                    _selectedWeather = weather;
                   });
-                  widget.onMoodSelected(mood);
+                  widget.onWeatherSelected(weather);
                 },
                 child: CircleAvatar(
-                  radius: 20,
-                  child: Text(mood),
+                  child: Text(weather),
                   backgroundColor:
-                      _selectedMood == mood ? Colors.blue : Colors.grey,
+                      _selectedWeather == weather ? Colors.blue : Colors.grey,
                 ),
               );
             }).toList(),

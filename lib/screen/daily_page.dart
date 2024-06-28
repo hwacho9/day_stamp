@@ -1,4 +1,5 @@
 import 'package:day_stamp/screen/components/moodselector.dart';
+import 'package:day_stamp/screen/components/weatherselector.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -22,8 +23,6 @@ class _DailyPageState extends State<DailyPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            ElevatedButton(
-                onPressed: () => _firebase.signOut(), child: Text("s")),
             const SizedBox(height: 20),
             MoodSelector(
               onMoodSelected: (String mood) {
@@ -33,23 +32,12 @@ class _DailyPageState extends State<DailyPage> {
               },
             ),
             const SizedBox(height: 20),
-            const Text('오늘의 날씨'),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <String>['☀️', '🌧', '⛅️', '❄️'].map((String weather) {
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _selectedWeather = weather;
-                    });
-                  },
-                  child: CircleAvatar(
-                    child: Text(weather),
-                    backgroundColor:
-                        _selectedWeather == weather ? Colors.blue : Colors.grey,
-                  ),
-                );
-              }).toList(),
+            WeatherSelector(
+              onWeatherSelected: (String weather) {
+                setState(() {
+                  _selectedWeather = weather;
+                });
+              },
             ),
             const SizedBox(height: 20),
             const Text('오늘의 일기'),
