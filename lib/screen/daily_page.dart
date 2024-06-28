@@ -1,5 +1,8 @@
 import 'package:day_stamp/screen/components/moodselector.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+final _firebase = FirebaseAuth.instance;
 
 class DailyPage extends StatefulWidget {
   const DailyPage({super.key});
@@ -19,6 +22,8 @@ class _DailyPageState extends State<DailyPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            ElevatedButton(
+                onPressed: () => _firebase.signOut(), child: Text("s")),
             const SizedBox(height: 20),
             MoodSelector(
               onMoodSelected: (String mood) {

@@ -1,3 +1,4 @@
+import 'package:day_stamp/home_page.dart';
 import 'package:day_stamp/screen/components/input_box.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,9 +22,9 @@ class _SignupPageState extends State<SignupPage> {
     return GestureDetector(
       onTap: () => {FocusScope.of(context).unfocus()},
       child: Scaffold(
-        // appBar: AppBar(
-        //   leading: const BackButton(),
-        // ),
+        appBar: AppBar(
+          leading: const BackButton(),
+        ),
         body: Center(
           child: SingleChildScrollView(
             child: Padding(
@@ -93,6 +94,10 @@ class _SignupPageState extends State<SignupPage> {
               );
             }
           }
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage()),
+          );
         },
         child: const Text("サインアップ"),
       ),

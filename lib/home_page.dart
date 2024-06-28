@@ -1,6 +1,6 @@
 import 'package:day_stamp/screen/analysis_page.dart';
-import 'package:day_stamp/screen/auth.dart';
 import 'package:day_stamp/screen/daily_page.dart';
+import 'package:day_stamp/screen/login_page.dart';
 import 'package:day_stamp/screen/montly_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -39,9 +39,23 @@ class _HomePageState extends State<HomePage> {
             return Scaffold(
               appBar: AppBar(
                 title: const Text('Day Stamp'),
+                automaticallyImplyLeading: false,
+                actions: <Widget>[
+                  IconButton(
+                    icon: const Icon(Icons.exit_to_app),
+                    onPressed: () {
+                      FirebaseAuth.instance.signOut();
+                    },
+                  )
+                ],
               ),
-              body: Center(
-                child: _widgetOptions.elementAt(_selectedIndex),
+              body: WillPopScope(
+                onWillPop: () async {
+                  return false;
+                },
+                child: Center(
+                  child: _widgetOptions.elementAt(_selectedIndex),
+                ),
               ),
               bottomNavigationBar: BottomNavigationBar(
                 items: const <BottomNavigationBarItem>[
@@ -63,7 +77,7 @@ class _HomePageState extends State<HomePage> {
               ),
             );
           }
-          return const SignupPage();
+          return const LoginPage();
         });
   }
 }
