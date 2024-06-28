@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:day_stamp/home_page.dart';
 import 'package:day_stamp/screen/components/input_box.dart';
 import 'package:flutter/material.dart';
@@ -77,6 +78,15 @@ class _SignupPageState extends State<SignupPage> {
                 password: _passwordController.text,
               );
 
+              await FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(
+                    credential.user!.uid,
+                  )
+                  .set({
+                'email': _emailController.text,
+                'uid': credential.user!.uid,
+              });
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text("サインアップに成功しました"),
