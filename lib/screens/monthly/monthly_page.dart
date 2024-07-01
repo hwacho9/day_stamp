@@ -1,5 +1,5 @@
 import 'package:day_stamp/providers/user_provider.dart';
-import 'package:day_stamp/screens/monthly/utils/customCalendar.dart';
+import 'package:day_stamp/screens/monthly/widgets/customCalendar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
