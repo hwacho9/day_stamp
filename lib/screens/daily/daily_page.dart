@@ -22,6 +22,7 @@ class DailyPage extends StatefulWidget {
 class _DailyPageState extends State<DailyPage> {
   String _selectedMood = '';
   String _selectedWeather = '';
+  String _selectedMoodString = '';
   TextEditingController _diaryController = TextEditingController();
   DatabaseService dbService = DatabaseService();
   @override
@@ -48,9 +49,11 @@ class _DailyPageState extends State<DailyPage> {
           children: <Widget>[
             const SizedBox(height: 20),
             MoodSelector(
-              onMoodSelected: (String mood) {
+              onMoodSelected: (String mood, String moodstring) {
                 setState(() {
                   _selectedMood = mood;
+                  _selectedMoodString = moodstring;
+                  print(_selectedMoodString);
                   // print(_selectedMood);
                 });
               },
@@ -82,11 +85,11 @@ class _DailyPageState extends State<DailyPage> {
                 dbService.addEntry(
                     user.currentUser?.uid ?? '',
                     DateTime.now(),
-                    _selectedMood,
+                    _selectedMoodString,
                     _selectedWeather,
                     [],
                     _diaryController.text,
-                    []);
+                    _selectedMood);
               },
               child: const Text('保存'),
             )

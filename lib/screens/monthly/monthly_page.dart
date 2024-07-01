@@ -70,7 +70,7 @@ class _MonthlyPageState extends State<MonthlyPage> {
         print("Date field is not a Timestamp: $dateField"); // 타입 불일치 로그
         continue;
       }
-      String? emoji = doc.data()['mood']; // 이모티콘 데이터, null 가능성 고려
+      String? emoji = doc.data()['emojis']; // 이모티콘 데이터, null 가능성 고려
       if (emoji == null) {
         print("Emoji is null for document: ${doc.id}"); // 이모티콘 데이터 없음 로그
         continue;

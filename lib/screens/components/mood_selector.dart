@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
 class MoodSelector extends StatefulWidget {
-  final void Function(String) onMoodSelected;
+  final void Function(String, String) onMoodSelected;
 
-  const MoodSelector({super.key, required this.onMoodSelected});
+  const MoodSelector({
+    super.key,
+    required this.onMoodSelected,
+  });
 
   @override
   State<MoodSelector> createState() => _MoodSelectorState();
@@ -11,6 +14,7 @@ class MoodSelector extends StatefulWidget {
 
 class _MoodSelectorState extends State<MoodSelector> {
   String _selectedMood = '';
+  String _selectedMoodString = '';
 
   String getMoodWord(String emoji) {
     Map<String, String> emojiToMood = {
@@ -43,16 +47,16 @@ class _MoodSelectorState extends State<MoodSelector> {
               return GestureDetector(
                 onTap: () {
                   setState(() {
-                    _selectedMood = getMoodWord(mood);
+                    _selectedMood = mood;
+                    _selectedMoodString = getMoodWord(mood);
                   });
-                  widget.onMoodSelected(getMoodWord(mood));
+                  widget.onMoodSelected(mood, getMoodWord(mood));
                 },
                 child: CircleAvatar(
                   radius: 20,
                   child: Text(mood),
-                  backgroundColor: _selectedMood == getMoodWord(mood)
-                      ? Colors.blue
-                      : Colors.grey,
+                  backgroundColor:
+                      _selectedMood == mood ? Colors.blue : Colors.grey,
                 ),
               );
             }).toList(),
