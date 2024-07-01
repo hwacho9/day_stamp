@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
+import '../../service/database_service.dart';
+
 final _firebase = FirebaseAuth.instance;
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -21,26 +23,7 @@ class _DailyPageState extends State<DailyPage> {
   String _selectedMood = '';
   String _selectedWeather = '';
   TextEditingController _diaryController = TextEditingController();
-
-  void addEntry(String userId, String date, String mood, String weather,
-      List<String> tasks, String diary, List<String> emojis) {
-    var dateParts = date.split('-');
-    var year = dateParts[0];
-    var month = dateParts[1];
-
-    // Step 2: Construct the collection name dynamically
-    var collectionName = 'entries_$year$month';
-
-    firestore.collection('entries').doc(userId).collection(collectionName).add({
-      'date': date,
-      'mood': mood,
-      'weather': weather,
-      'tasks': tasks,
-      'diary': diary,
-      'emojis': emojis,
-    });
-  }
-
+  DatabaseService dbService = DatabaseService();
   @override
   void initState() {
     super.initState();
@@ -97,7 +80,7 @@ class _DailyPageState extends State<DailyPage> {
             ),
             ElevatedButton(
               onPressed: () {
-                addEntry(
+                dbService.addEntry(
                     user.currentUser?.uid ?? '',
                     DateTime.now().toString(),
                     _selectedMood,
