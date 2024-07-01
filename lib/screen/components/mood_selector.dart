@@ -12,6 +12,16 @@ class MoodSelector extends StatefulWidget {
 class _MoodSelectorState extends State<MoodSelector> {
   String _selectedMood = '';
 
+  String getMoodWord(String emoji) {
+    Map<String, String> emojiToMood = {
+      '😊': 'happy',
+      '😢': 'sad',
+      '😠': 'angry',
+      '😍': 'in love',
+    };
+    return emojiToMood[emoji] ?? 'unknown';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,15 +43,16 @@ class _MoodSelectorState extends State<MoodSelector> {
               return GestureDetector(
                 onTap: () {
                   setState(() {
-                    _selectedMood = mood;
+                    _selectedMood = getMoodWord(mood);
                   });
-                  widget.onMoodSelected(mood);
+                  widget.onMoodSelected(getMoodWord(mood));
                 },
                 child: CircleAvatar(
                   radius: 20,
                   child: Text(mood),
-                  backgroundColor:
-                      _selectedMood == mood ? Colors.blue : Colors.grey,
+                  backgroundColor: _selectedMood == getMoodWord(mood)
+                      ? Colors.blue
+                      : Colors.grey,
                 ),
               );
             }).toList(),
