@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:day_stamp/home_page.dart';
-import 'package:day_stamp/screen/components/input_box.dart';
+import 'package:day_stamp/screens/components/input_box.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

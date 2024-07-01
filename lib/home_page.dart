@@ -1,8 +1,8 @@
 import 'package:day_stamp/providers/user_provider.dart';
-import 'package:day_stamp/screen/analysis_page.dart';
-import 'package:day_stamp/screen/daily_page.dart';
-import 'package:day_stamp/screen/login_page.dart';
-import 'package:day_stamp/screen/montly_page.dart';
+import 'package:day_stamp/screens/analsis/analysis_page.dart';
+import 'package:day_stamp/screens/daily/daily_page.dart';
+import 'package:day_stamp/screens/login_page.dart';
+import 'package:day_stamp/screens/monthly/monthly_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -16,9 +16,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
-  static const List<Widget> _widgetOptions = <Widget>[
+  static List<Widget> _widgetOptions = <Widget>[
     DailyPage(),
-    MontlyPage(),
+    MonthlyPage(),
     AnalysisPage()
   ];
 

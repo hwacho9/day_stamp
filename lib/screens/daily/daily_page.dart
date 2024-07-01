@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:day_stamp/providers/user_provider.dart';
-import 'package:day_stamp/screen/components/mood_selector.dart';
-import 'package:day_stamp/screen/components/weather_selector.dart';
+import 'package:day_stamp/screens/components/mood_selector.dart';
+import 'package:day_stamp/screens/components/weather_selector.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -41,7 +41,6 @@ class _DailyPageState extends State<DailyPage> {
     // ignore: unused_local_variable
     final user = Provider.of<UserProvider>(context);
     // print(user.currentUser);
-    // print(user.currentUser?.uid);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -82,7 +81,7 @@ class _DailyPageState extends State<DailyPage> {
               onPressed: () {
                 dbService.addEntry(
                     user.currentUser?.uid ?? '',
-                    DateTime.now().toString(),
+                    DateTime.now(),
                     _selectedMood,
                     _selectedWeather,
                     [],
