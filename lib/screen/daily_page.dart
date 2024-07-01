@@ -78,16 +78,17 @@ class _DailyPageState extends State<DailyPage> {
               onWeatherSelected: (String weather) {
                 setState(() {
                   _selectedWeather = weather;
+                  // print(_selectedWeather);
                 });
               },
             ),
             const SizedBox(height: 20),
             const Text('오늘의 일기'),
             Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: TextFormField(
                 controller: _diaryController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: '여기에 일기를 작성하세요',
                 ),
@@ -105,7 +106,7 @@ class _DailyPageState extends State<DailyPage> {
                     _diaryController.text,
                     []);
               },
-              child: Text('저장'),
+              child: const Text('保存'),
             )
           ],
         ),

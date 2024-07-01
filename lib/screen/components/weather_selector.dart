@@ -13,6 +13,16 @@ class WeatherSelector extends StatefulWidget {
 class _WeatherSelectorState extends State<WeatherSelector> {
   String _selectedWeather = '';
 
+  String getWeatherWord(String emoji) {
+    Map<String, String> emojiToWord = {
+      '☀️': 'sunny',
+      '🌧': 'rainy',
+      '⛅️': 'cloudy',
+      '❄️': 'snowy',
+    };
+    return emojiToWord[emoji] ?? 'unknown';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,7 +35,7 @@ class _WeatherSelectorState extends State<WeatherSelector> {
       ),
       child: Column(
         children: [
-          const Text('오늘의 날씨',
+          const Text('今日の天気',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           const SizedBox(height: 10),
           Row(
@@ -34,14 +44,15 @@ class _WeatherSelectorState extends State<WeatherSelector> {
               return GestureDetector(
                 onTap: () {
                   setState(() {
-                    _selectedWeather = weather;
+                    _selectedWeather = getWeatherWord(weather);
                   });
-                  widget.onWeatherSelected(weather);
+                  widget.onWeatherSelected(getWeatherWord(weather));
                 },
                 child: CircleAvatar(
                   child: Text(weather),
-                  backgroundColor:
-                      _selectedWeather == weather ? Colors.blue : Colors.grey,
+                  backgroundColor: _selectedWeather == getWeatherWord(weather)
+                      ? Colors.blue
+                      : Colors.grey,
                 ),
               );
             }).toList(),
