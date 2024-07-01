@@ -1,5 +1,6 @@
 import 'package:day_stamp/providers/user_provider.dart';
 import 'package:day_stamp/screens/monthly/widgets/customCalendar.dart';
+import 'package:day_stamp/screens/monthly/widgets/monthlyProgress.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -21,6 +22,10 @@ class _MonthlyPageState extends State<MonthlyPage> {
   // 현재 보고 있는 연도와 월을 저장할 변수
   int _currentYear = DateTime.now().year;
   int _currentMonth = DateTime.now().month;
+
+  //progress indicator
+  final int totalDays = 30; // 가정: 이번 달은 30일까지 있음
+  final int filledDays = 20; // 가정: 20일 동안 일기를 작성함
 
   @override
   void initState() {
@@ -91,11 +96,18 @@ class _MonthlyPageState extends State<MonthlyPage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context, listen: false);
+    var userId = user.currentUser?.uid; // 사용자 ID 설정
+    var collectionMonth = 'entries_$_currentYear' '0$_currentMonth';
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Text("gage 入れる予定"),
+            MonthlyProgressIndicator(
+              userId: userId,
+              collectionMonth: collectionMonth,
+            ),
             CustomTableCalendar(
               firstDay: DateTime.utc(2020, 1, 1),
               lastDay: DateTime.utc(2030, 12, 31),

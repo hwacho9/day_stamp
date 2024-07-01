@@ -24,7 +24,6 @@ class _AnalysisPageState extends State<AnalysisPage> {
     Map<String, int> moodCount = {};
 
     for (var doc in snapshot.docs) {
-      print(doc);
       String mood = doc['mood'];
       if (moodCount.containsKey(mood)) {
         moodCount[mood] = moodCount[mood]! + 1;
