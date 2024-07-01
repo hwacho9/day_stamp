@@ -74,63 +74,68 @@ class _MonthlyPageState extends State<MonthlyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: TableCalendar(
-        calendarStyle: const CalendarStyle(
-          defaultTextStyle: TextStyle(fontSize: 20), // 날짜 글자 크기 조정
-          weekendTextStyle: TextStyle(fontSize: 20), // 주말 글자 크기 조정
-          // 여기에 더 많은 스타일 조정을 추가할 수 있습니다.
-        ),
-        rowHeight: 100, // 달력 행의 높이 조정
-        firstDay: DateTime.utc(2020, 1, 1),
-        lastDay: DateTime.utc(2030, 12, 31),
-        focusedDay: _focusedDay,
-        calendarFormat: _calendarFormat,
-        selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-        onDaySelected: (selectedDay, focusedDay) {
-          setState(() {
-            _selectedDay = selectedDay;
-            _focusedDay = focusedDay;
-            _selectedEvents = _getEventsForDay(selectedDay);
-          });
-        },
-        // eventLoader: (day) {
-        //   return _getEventsForDay(day);
-        // },
-        calendarBuilders: CalendarBuilders(
-          defaultBuilder: (context, date, events) {
-            var emoji = _getEventsForDay(date).join();
-            return Column(
-              children: [
-                SizedBox(
-                  height: 10,
-                ),
-                emoji.isNotEmpty
-                    ? Text(
-                        emoji,
-                        style: const TextStyle(
-                          fontSize: 36,
-                        ),
-                      )
-                    : Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: Colors.grey,
-                          shape: BoxShape.circle,
-                        ),
-                        alignment: Alignment.center,
+      body: Column(
+        children: [
+          Text("gage 入れる予定"),
+          TableCalendar(
+            calendarStyle: const CalendarStyle(
+              defaultTextStyle: TextStyle(fontSize: 20), // 날짜 글자 크기 조정
+              weekendTextStyle: TextStyle(fontSize: 20), // 주말 글자 크기 조정
+              // 여기에 더 많은 스타일 조정을 추가할 수 있습니다.
+            ),
+            headerStyle: const HeaderStyle(
+                formatButtonVisible: false, // 달력 포맷 버튼 숨기기
+                titleCentered: true),
+            rowHeight: 100, // 달력 행의 높이 조정
+            firstDay: DateTime.utc(2020, 1, 1),
+            lastDay: DateTime.utc(2030, 12, 31),
+            focusedDay: _focusedDay,
+            calendarFormat: _calendarFormat,
+            selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+            onDaySelected: (selectedDay, focusedDay) {
+              setState(() {
+                _selectedDay = selectedDay;
+                _focusedDay = focusedDay;
+                _selectedEvents = _getEventsForDay(selectedDay);
+              });
+            },
+            calendarBuilders: CalendarBuilders(
+              defaultBuilder: (context, date, events) {
+                var emoji = _getEventsForDay(date).join();
+                return Column(
+                  children: [
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    emoji.isNotEmpty
+                        ? Text(
+                            emoji,
+                            style: const TextStyle(
+                              fontSize: 36,
+                            ),
+                          )
+                        : Container(
+                            width: 50,
+                            height: 50,
+                            decoration: const BoxDecoration(
+                              color: Colors.grey,
+                              shape: BoxShape.circle,
+                            ),
+                            alignment: Alignment.center,
+                          ),
+                    Text(
+                      date.day.toString(),
+                      style: const TextStyle(
+                        fontSize: 15,
+                        color: Colors.black,
                       ),
-                Text(
-                  date.day.toString(),
-                  style: const TextStyle(
-                    fontSize: 15,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-            );
-          },
-        ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
