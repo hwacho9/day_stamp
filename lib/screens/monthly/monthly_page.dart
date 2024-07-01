@@ -162,6 +162,48 @@ class _MonthlyPageState extends State<MonthlyPage> {
                     ],
                   );
                 },
+                todayBuilder: (context, date, focusedDay) {
+                  var emoji = _getEventsForDay(date).join();
+                  return Column(
+                    children: [
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      emoji.isNotEmpty
+                          ? Text(
+                              emoji,
+                              style: const TextStyle(
+                                fontSize: 36,
+                              ),
+                            )
+                          : Container(
+                              width: 40,
+                              height: 60,
+                              decoration: const BoxDecoration(
+                                color: Colors.grey,
+                                shape: BoxShape.circle,
+                              ),
+                              alignment: Alignment.center,
+                            ),
+                      Container(
+                        padding: const EdgeInsets.only(
+                            left: 20, right: 20), // 텍스트 주변에 여백을 추가
+                        decoration: BoxDecoration(
+                          color: Colors.red, // 배경색을 파란색으로 설정
+                          borderRadius:
+                              BorderRadius.circular(5), // 배경의 모서리를 둥글게
+                        ),
+                        child: Text(
+                          date.day.toString(),
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
                 selectedBuilder: (context, date, events) {
                   var emoji = _getEventsForDay(date).join();
                   return Column(
