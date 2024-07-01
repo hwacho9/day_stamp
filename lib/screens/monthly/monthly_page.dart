@@ -1,4 +1,6 @@
+import 'package:day_stamp/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -13,6 +15,9 @@ class _MonthlyPageState extends State<MonthlyPage> {
   late CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _selectedDay = DateTime.now();
   DateTime _focusedDay = DateTime.now();
+  // 현재 보고 있는 연도와 월을 저장할 변수
+  int _currentYear = DateTime.now().year;
+  int _currentMonth = DateTime.now().month;
 
   @override
   void initState() {
@@ -20,6 +25,13 @@ class _MonthlyPageState extends State<MonthlyPage> {
     _calendarFormat = CalendarFormat.month;
     _events = {};
     _selectedEvents = [];
+    // _fetchEvents();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Now it's safe to call _fetchEvents() here
     _fetchEvents();
   }
 
@@ -34,10 +46,14 @@ class _MonthlyPageState extends State<MonthlyPage> {
         .toList();
   }
 
+  // have to make Cache logic
+  //
   void _fetchEvents() async {
+    final user = Provider.of<UserProvider>(context, listen: false);
     // Firestore에서 데이터 조회
-    String userId = "juSqhcNR21hGkinR5wivxyPRGZ03"; // 사용자 ID 설정
-    String collectionMonth = "entries_202407"; // 조회할 월 설정
+    var userId = user.currentUser?.uid; // 사용자 ID 설정
+    var collectionMonth = 'entries_$_currentYear' + '0' + '$_currentMonth';
+    // print(collectionMonth);
     var collection = FirebaseFirestore.instance
         .collection('entries')
         .doc(userId)
@@ -67,75 +83,87 @@ class _MonthlyPageState extends State<MonthlyPage> {
     }
     setState(() {
       _events = events;
-      // print(_events);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Text("gage 入れる予定"),
-          TableCalendar(
-            calendarStyle: const CalendarStyle(
-              defaultTextStyle: TextStyle(fontSize: 20), // 날짜 글자 크기 조정
-              weekendTextStyle: TextStyle(fontSize: 20), // 주말 글자 크기 조정
-              // 여기에 더 많은 스타일 조정을 추가할 수 있습니다.
-            ),
-            headerStyle: const HeaderStyle(
-                formatButtonVisible: false, // 달력 포맷 버튼 숨기기
-                titleCentered: true),
-            rowHeight: 100, // 달력 행의 높이 조정
-            firstDay: DateTime.utc(2020, 1, 1),
-            lastDay: DateTime.utc(2030, 12, 31),
-            focusedDay: _focusedDay,
-            calendarFormat: _calendarFormat,
-            selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-            onDaySelected: (selectedDay, focusedDay) {
-              setState(() {
-                _selectedDay = selectedDay;
-                _focusedDay = focusedDay;
-                _selectedEvents = _getEventsForDay(selectedDay);
-              });
-            },
-            calendarBuilders: CalendarBuilders(
-              defaultBuilder: (context, date, events) {
-                var emoji = _getEventsForDay(date).join();
-                return Column(
-                  children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    emoji.isNotEmpty
-                        ? Text(
-                            emoji,
-                            style: const TextStyle(
-                              fontSize: 36,
-                            ),
-                          )
-                        : Container(
-                            width: 50,
-                            height: 50,
-                            decoration: const BoxDecoration(
-                              color: Colors.grey,
-                              shape: BoxShape.circle,
-                            ),
-                            alignment: Alignment.center,
-                          ),
-                    Text(
-                      date.day.toString(),
-                      style: const TextStyle(
-                        fontSize: 15,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                );
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Text("gage 入れる予定"),
+            TableCalendar(
+              calendarStyle: const CalendarStyle(
+                defaultTextStyle: TextStyle(fontSize: 30), // 날짜 글자 크기 조정
+                weekendTextStyle: TextStyle(fontSize: 20), // 주말 글자 크기 조정
+                // 여기에 더 많은 스타일 조정을 추가할 수 있습니다.
+              ),
+              headerStyle: const HeaderStyle(
+                  formatButtonVisible: false, // 달력 포맷 버튼 숨기기
+                  titleCentered: true),
+              rowHeight: 100, // 달력 행의 높이 조정
+              firstDay: DateTime.utc(2020, 1, 1),
+              lastDay: DateTime.utc(2030, 12, 31),
+              onPageChanged: (date) {
+                // 현재 보고 있는 연도와 월 업데이트
+                setState(() {
+                  _currentYear = date.year;
+                  _currentMonth = date.month;
+                  _focusedDay = date;
+                });
+                _fetchEvents();
+                // 선택적으로 현재 연도와 월을 출력
+                // print("현재 보고 있는 연도: $_currentYear, 월: $_currentMonth");
               },
+              focusedDay: _focusedDay,
+              calendarFormat: _calendarFormat,
+              selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+              onDaySelected: (selectedDay, focusedDay) {
+                setState(() {
+                  _selectedDay = selectedDay;
+                  _focusedDay = focusedDay;
+                  _selectedEvents = _getEventsForDay(selectedDay);
+                });
+              },
+              calendarBuilders: CalendarBuilders(
+                defaultBuilder: (context, date, events) {
+                  var emoji = _getEventsForDay(date).join();
+                  return Column(
+                    children: [
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      emoji.isNotEmpty
+                          ? Text(
+                              emoji,
+                              style: const TextStyle(
+                                fontSize: 36,
+                              ),
+                            )
+                          : Container(
+                              width: 40,
+                              height: 60,
+                              decoration: const BoxDecoration(
+                                color: Colors.grey,
+                                shape: BoxShape.circle,
+                              ),
+                              alignment: Alignment.center,
+                            ),
+                      Text(
+                        date.day.toString(),
+                        style: const TextStyle(
+                          fontSize: 10,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
