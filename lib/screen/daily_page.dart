@@ -1,7 +1,12 @@
+import 'package:day_stamp/providers/user_provider.dart';
 import 'package:day_stamp/screen/components/moodselector.dart';
 import 'package:day_stamp/screen/components/weatherselector.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import 'package:day_stamp/service/user_service.dart';
+import 'package:day_stamp/models/user_model.dart';
+import 'package:provider/provider.dart';
 
 final _firebase = FirebaseAuth.instance;
 
@@ -18,6 +23,10 @@ class _DailyPageState extends State<DailyPage> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
+    final user = Provider.of<UserProvider>(context);
+    // print(user.currentUser);
+    // print(user.currentUser?.uid);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -41,8 +50,8 @@ class _DailyPageState extends State<DailyPage> {
             ),
             const SizedBox(height: 20),
             const Text('오늘의 일기'),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
               child: TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),

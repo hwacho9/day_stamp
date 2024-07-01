@@ -1,3 +1,4 @@
+import 'package:day_stamp/providers/user_provider.dart';
 import 'package:day_stamp/screen/analysis_page.dart';
 import 'package:day_stamp/screen/daily_page.dart';
 import 'package:day_stamp/screen/login_page.dart';
