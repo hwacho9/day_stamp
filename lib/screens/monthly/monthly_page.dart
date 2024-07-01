@@ -1,4 +1,5 @@
 import 'package:day_stamp/providers/user_provider.dart';
+import 'package:day_stamp/screens/monthly/utils/customCalendar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -95,18 +96,11 @@ class _MonthlyPageState extends State<MonthlyPage> {
         child: Column(
           children: [
             Text("gage 入れる予定"),
-            TableCalendar(
-              calendarStyle: const CalendarStyle(
-                defaultTextStyle: TextStyle(fontSize: 30), // 날짜 글자 크기 조정
-                weekendTextStyle: TextStyle(fontSize: 20), // 주말 글자 크기 조정
-                // 여기에 더 많은 스타일 조정을 추가할 수 있습니다.
-              ),
-              headerStyle: const HeaderStyle(
-                  formatButtonVisible: false, // 달력 포맷 버튼 숨기기
-                  titleCentered: true),
-              rowHeight: 100, // 달력 행의 높이 조정
+            CustomTableCalendar(
               firstDay: DateTime.utc(2020, 1, 1),
               lastDay: DateTime.utc(2030, 12, 31),
+              focusedDay: _focusedDay,
+              calendarFormat: _calendarFormat,
               onPageChanged: (date) {
                 // 현재 보고 있는 연도와 월 업데이트
                 setState(() {
@@ -118,9 +112,6 @@ class _MonthlyPageState extends State<MonthlyPage> {
                 // 선택적으로 현재 연도와 월을 출력
                 // print("현재 보고 있는 연도: $_currentYear, 월: $_currentMonth");
               },
-              focusedDay: _focusedDay,
-              calendarFormat: _calendarFormat,
-              selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
               onDaySelected: (selectedDay, focusedDay) {
                 setState(() {
                   _selectedDay = selectedDay;
@@ -128,126 +119,9 @@ class _MonthlyPageState extends State<MonthlyPage> {
                   _selectedEvents = _getEventsForDay(selectedDay);
                 });
               },
-              calendarBuilders: CalendarBuilders(
-                defaultBuilder: (context, date, events) {
-                  var emoji = _getEventsForDay(date).join();
-                  return Column(
-                    children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      emoji.isNotEmpty
-                          ? Text(
-                              emoji,
-                              style: const TextStyle(
-                                fontSize: 36,
-                              ),
-                            )
-                          : Container(
-                              width: 40,
-                              height: 60,
-                              decoration: const BoxDecoration(
-                                color: Colors.grey,
-                                shape: BoxShape.circle,
-                              ),
-                              alignment: Alignment.center,
-                            ),
-                      Text(
-                        date.day.toString(),
-                        style: const TextStyle(
-                          fontSize: 10,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
-                  );
-                },
-                todayBuilder: (context, date, focusedDay) {
-                  var emoji = _getEventsForDay(date).join();
-                  return Column(
-                    children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      emoji.isNotEmpty
-                          ? Text(
-                              emoji,
-                              style: const TextStyle(
-                                fontSize: 36,
-                              ),
-                            )
-                          : Container(
-                              width: 40,
-                              height: 60,
-                              decoration: const BoxDecoration(
-                                color: Colors.grey,
-                                shape: BoxShape.circle,
-                              ),
-                              alignment: Alignment.center,
-                            ),
-                      Container(
-                        padding: const EdgeInsets.only(
-                            left: 20, right: 20), // 텍스트 주변에 여백을 추가
-                        decoration: BoxDecoration(
-                          color: Colors.red, // 배경색을 파란색으로 설정
-                          borderRadius:
-                              BorderRadius.circular(5), // 배경의 모서리를 둥글게
-                        ),
-                        child: Text(
-                          date.day.toString(),
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
-                selectedBuilder: (context, date, events) {
-                  var emoji = _getEventsForDay(date).join();
-                  return Column(
-                    children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      emoji.isNotEmpty
-                          ? Text(
-                              emoji,
-                              style: const TextStyle(
-                                fontSize: 36,
-                              ),
-                            )
-                          : Container(
-                              width: 40,
-                              height: 60,
-                              decoration: const BoxDecoration(
-                                color: Colors.grey,
-                                shape: BoxShape.circle,
-                              ),
-                              alignment: Alignment.center,
-                            ),
-                      Container(
-                        padding: const EdgeInsets.only(
-                            left: 20, right: 20), // 텍스트 주변에 여백을 추가
-                        decoration: BoxDecoration(
-                          color: Colors.blue, // 배경색을 파란색으로 설정
-                          borderRadius:
-                              BorderRadius.circular(5), // 배경의 모서리를 둥글게
-                        ),
-                        child: Text(
-                          date.day.toString(),
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ),
+              getEventsForDay:
+                  _getEventsForDay, // Assuming this is a method that returns events for a given day
+            )
           ],
         ),
       ),
