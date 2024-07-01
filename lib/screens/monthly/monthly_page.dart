@@ -5,6 +5,8 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MonthlyPage extends StatefulWidget {
+  const MonthlyPage({super.key});
+
   @override
   _MonthlyPageState createState() => _MonthlyPageState();
 }
@@ -52,7 +54,7 @@ class _MonthlyPageState extends State<MonthlyPage> {
     final user = Provider.of<UserProvider>(context, listen: false);
     // Firestore에서 데이터 조회
     var userId = user.currentUser?.uid; // 사용자 ID 설정
-    var collectionMonth = 'entries_$_currentYear' + '0' + '$_currentMonth';
+    var collectionMonth = 'entries_$_currentYear' '0$_currentMonth';
     // print(collectionMonth);
     var collection = FirebaseFirestore.instance
         .collection('entries')
@@ -155,6 +157,48 @@ class _MonthlyPageState extends State<MonthlyPage> {
                         style: const TextStyle(
                           fontSize: 10,
                           color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  );
+                },
+                selectedBuilder: (context, date, events) {
+                  var emoji = _getEventsForDay(date).join();
+                  return Column(
+                    children: [
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      emoji.isNotEmpty
+                          ? Text(
+                              emoji,
+                              style: const TextStyle(
+                                fontSize: 36,
+                              ),
+                            )
+                          : Container(
+                              width: 40,
+                              height: 60,
+                              decoration: const BoxDecoration(
+                                color: Colors.grey,
+                                shape: BoxShape.circle,
+                              ),
+                              alignment: Alignment.center,
+                            ),
+                      Container(
+                        padding: const EdgeInsets.only(
+                            left: 20, right: 20), // 텍스트 주변에 여백을 추가
+                        decoration: BoxDecoration(
+                          color: Colors.blue, // 배경색을 파란색으로 설정
+                          borderRadius:
+                              BorderRadius.circular(5), // 배경의 모서리를 둥글게
+                        ),
+                        child: Text(
+                          date.day.toString(),
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ],
