@@ -89,9 +89,11 @@ class _MonthlyPageState extends State<MonthlyPage> {
       }
       events[date]!.add(emoji);
     }
-    setState(() {
-      _events = events;
-    });
+    if (mounted) {
+      setState(() {
+        _events = events;
+      });
+    }
   }
 
   @override

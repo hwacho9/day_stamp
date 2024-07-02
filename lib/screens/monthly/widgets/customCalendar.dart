@@ -43,11 +43,17 @@ class CustomTableCalendar extends StatelessWidget {
       calendarBuilders: CalendarBuilders(
         defaultBuilder: (context, date, events) {
           var emoji = getEventsForDay(date).join();
+          print(emoji);
+
           return Column(
             children: [
               const SizedBox(height: 20),
               emoji.isNotEmpty
-                  ? Text(emoji, style: const TextStyle(fontSize: 36))
+                  ? Image.asset(
+                      emoji,
+                      width: 60,
+                      height: 60,
+                    )
                   : Container(
                       width: 40,
                       height: 60,
@@ -72,11 +78,10 @@ class CustomTableCalendar extends StatelessWidget {
                 height: 20,
               ),
               emoji.isNotEmpty
-                  ? Text(
+                  ? Image.asset(
                       emoji,
-                      style: const TextStyle(
-                        fontSize: 36,
-                      ),
+                      width: 60,
+                      height: 60,
                     )
                   : Container(
                       width: 40,
@@ -113,11 +118,10 @@ class CustomTableCalendar extends StatelessWidget {
                 height: 20,
               ),
               emoji.isNotEmpty
-                  ? Text(
+                  ? Image.asset(
                       emoji,
-                      style: const TextStyle(
-                        fontSize: 36,
-                      ),
+                      width: 60,
+                      height: 60,
                     )
                   : Container(
                       width: 40,
