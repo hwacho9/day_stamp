@@ -6,12 +6,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
+import 'package:intl/date_symbol_data_local.dart'; //intlインポートする
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  initializeDateFormatting('ja').then((_) => runApp(MyApp()));
 }
 
 class MyApp extends StatelessWidget {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:intl/intl.dart';
 
 class CustomTableCalendar extends StatelessWidget {
   final DateTime firstDay;
@@ -11,7 +12,7 @@ class CustomTableCalendar extends StatelessWidget {
   final List<dynamic> Function(DateTime) getEventsForDay;
 
   const CustomTableCalendar({
-    Key? key,
+    super.key,
     required this.firstDay,
     required this.lastDay,
     required this.focusedDay,
@@ -19,11 +20,12 @@ class CustomTableCalendar extends StatelessWidget {
     required this.onPageChanged,
     required this.onDaySelected,
     required this.getEventsForDay,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return TableCalendar(
+      locale: 'ja-JP',
       calendarStyle: const CalendarStyle(
         defaultTextStyle: TextStyle(fontSize: 30),
         weekendTextStyle: TextStyle(fontSize: 20),
@@ -43,7 +45,6 @@ class CustomTableCalendar extends StatelessWidget {
       calendarBuilders: CalendarBuilders(
         defaultBuilder: (context, date, events) {
           var emoji = getEventsForDay(date).join();
-          print(emoji);
 
           return Column(
             children: [

@@ -52,7 +52,7 @@ class _MonthlyProgressIndicatorState extends State<MonthlyProgressIndicator> {
   @override
   Widget build(BuildContext context) {
     double fillPercentage = totalDays > 0 ? (filledDays / totalDays) * 100 : 0;
-    print(fillPercentage);
+    // print(fillPercentage);
     return Row(
       children: [
         // Expanded(
