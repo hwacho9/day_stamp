@@ -23,6 +23,8 @@ class _MoodSelectorState extends State<MoodSelector> {
       'assets/images/sad.png': 'sad',
       'assets/images/angry.png': 'angry',
       'assets/images/love.png': 'love',
+      'assets/images/tired.png': 'tired',
+      'assets/images/ridiculous.png': 'ridiculous'
     };
     return imagePathToMood[imagePath] ?? 'unknown';
   }
@@ -48,9 +50,11 @@ class _MoodSelectorState extends State<MoodSelector> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <String>[
                 'assets/images/happy.png',
+                'assets/images/love.png',
                 'assets/images/sad.png',
+                'assets/images/tired.png',
                 'assets/images/angry.png',
-                'assets/images/love.png'
+                'assets/images/ridiculous.png'
               ].map((String imagePath) {
                 return GestureDetector(
                   onTap: () {
