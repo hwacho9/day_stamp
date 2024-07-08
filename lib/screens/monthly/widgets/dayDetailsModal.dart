@@ -77,31 +77,50 @@ class DayDetailsComponent {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return Container(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Text(details.day),
-              details.emoji != ""
-                  ? Image.asset(
-                      details.emoji,
-                      width: 60,
-                      height: 60,
-                    )
-                  : Container(
-                      width: 40,
-                      height: 60,
-                      decoration: const BoxDecoration(
-                        color: Colors.grey,
-                        shape: BoxShape.circle,
-                      ),
-                      alignment: Alignment.center,
-                    ),
-              // Text(
-              //     "Weather: ${details.weather}"), //  details 객체의 weather 필드에 접근
-              Text("Diary: ${details.diary}"), // details 객체의 필드에 접근
-            ],
+        return FractionallySizedBox(
+          widthFactor: 0.9,
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Text(
+                  details.day,
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    details.emoji != ""
+                        ? Image.asset(
+                            details.emoji,
+                            width: 80,
+                            height: 80,
+                          )
+                        : Container(
+                            width: 40,
+                            height: 60,
+                            decoration: const BoxDecoration(
+                              color: Colors.grey,
+                              shape: BoxShape.circle,
+                            ),
+                            alignment: Alignment.center,
+                          ),
+                    Text(
+                        "Weather: ${details.weather}"), //  details 객체의 weather 필드에 접근
+                  ],
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  "Diary",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 20),
+                Text(details.diary), // details 객체의 필드에 접근
+              ],
+            ),
           ),
         );
       },

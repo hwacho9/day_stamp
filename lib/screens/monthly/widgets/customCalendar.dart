@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import 'package:day_stamp/screens/monthly/widgets/dayDetails.dart';
+import 'package:day_stamp/screens/monthly/widgets/dayDetailsModal.dart';
 
 class CustomTableCalendar extends StatelessWidget {
   final DateTime firstDay;
@@ -43,6 +43,7 @@ class CustomTableCalendar extends StatelessWidget {
       calendarFormat: calendarFormat,
       selectedDayPredicate: (day) => isSameDay(focusedDay, day),
       onDaySelected: (selectedDay, focusedDay) {
+        onDaySelected;
         DayDetailsComponent.showDayDetailsModal(context, selectedDay);
       },
       calendarBuilders: CalendarBuilders(
