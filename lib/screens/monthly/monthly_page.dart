@@ -23,10 +23,6 @@ class _MonthlyPageState extends State<MonthlyPage> {
   int _currentYear = DateTime.now().year;
   int _currentMonth = DateTime.now().month;
 
-  //progress indicator
-  final int totalDays = 30; // 가정: 이번 달은 30일까지 있음
-  final int filledDays = 20; // 가정: 20일 동안 일기를 작성함
-
   @override
   void initState() {
     super.initState();
