@@ -67,10 +67,7 @@ class DayDetailsComponent {
     } else {
       // Return default or placeholder values if no matching document is found
       return DayDetails(
-          day: "",
-          diary: "No entry for this day.",
-          emoji: "😊",
-          weather: "Sunny");
+          day: "", diary: "No entry for this day.", emoji: "", weather: "");
     }
   }
 
@@ -85,12 +82,22 @@ class DayDetailsComponent {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Text("${details.day}"),
-              Image.asset(
-                details.emoji,
-                width: 60,
-                height: 60,
-              ),
+              Text(details.day),
+              details.emoji != ""
+                  ? Image.asset(
+                      details.emoji,
+                      width: 60,
+                      height: 60,
+                    )
+                  : Container(
+                      width: 40,
+                      height: 60,
+                      decoration: const BoxDecoration(
+                        color: Colors.grey,
+                        shape: BoxShape.circle,
+                      ),
+                      alignment: Alignment.center,
+                    ),
               // Text(
               //     "Weather: ${details.weather}"), //  details 객체의 weather 필드에 접근
               Text("Diary: ${details.diary}"), // details 객체의 필드에 접근
