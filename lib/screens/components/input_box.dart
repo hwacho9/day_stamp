@@ -77,3 +77,38 @@ class _PasswordInputState extends State<PasswordInput> {
     );
   }
 }
+
+class DiaryEntryComponent extends StatelessWidget {
+  final TextEditingController diaryController;
+
+  const DiaryEntryComponent({super.key, required this.diaryController});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        children: [
+          const Text('今日の日記'),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              controller: diaryController,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                ),
+                hintText: '今日の出来事を書いてください',
+              ),
+              maxLines: 5,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

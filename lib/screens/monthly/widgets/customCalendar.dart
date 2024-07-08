@@ -28,8 +28,8 @@ class CustomTableCalendar extends StatelessWidget {
     return TableCalendar(
       locale: 'ja-JP',
       calendarStyle: const CalendarStyle(
-        defaultTextStyle: TextStyle(fontSize: 30),
-        weekendTextStyle: TextStyle(fontSize: 20),
+        defaultTextStyle: TextStyle(fontSize: 20),
+        weekendTextStyle: TextStyle(fontSize: 10),
       ),
       headerStyle: const HeaderStyle(
         formatButtonVisible: false,
@@ -51,7 +51,7 @@ class CustomTableCalendar extends StatelessWidget {
           var emoji = getEventsForDay(date).join();
           return Column(
             children: [
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               emoji.isNotEmpty
                   ? Image.asset(
                       emoji,
@@ -79,7 +79,7 @@ class CustomTableCalendar extends StatelessWidget {
           return Column(
             children: [
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
               emoji.isNotEmpty
                   ? Image.asset(
@@ -119,7 +119,7 @@ class CustomTableCalendar extends StatelessWidget {
           return Column(
             children: [
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
               emoji.isNotEmpty
                   ? Image.asset(

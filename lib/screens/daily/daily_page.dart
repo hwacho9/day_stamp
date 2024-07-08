@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:day_stamp/providers/user_provider.dart';
+import 'package:day_stamp/screens/components/buttons.dart';
+import 'package:day_stamp/screens/components/input_box.dart';
 import 'package:day_stamp/screens/components/mood_selector.dart';
 import 'package:day_stamp/screens/components/weather_selector.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -70,57 +72,22 @@ class _DailyPageState extends State<DailyPage> {
                 },
               ),
               const SizedBox(height: 20),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  children: [
-                    const Text('今日の日記'),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextFormField(
-                        controller: _diaryController,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
-                          ),
-                          hintText: '今日の出来事を書いてください',
-                        ),
-                        maxLines: 5,
-                      ),
-                    ),
-                  ],
-                ),
+              DiaryEntryComponent(
+                diaryController: _diaryController,
               ),
               const SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    backgroundColor: const Color.fromARGB(255, 247, 162, 191),
-                  ),
-                  onPressed: () {
-                    dbService.addEntry(
-                        user.currentUser?.uid ?? '',
-                        DateTime.now(),
-                        _selectedMoodString,
-                        _selectedWeather,
-                        [],
-                        _diaryController.text,
-                        _selectedMood);
-                  },
-                  child: const Text(
-                    '保存',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-              )
+              SaveButton(
+                onSave: () {
+                  dbService.addEntry(
+                      user.currentUser?.uid ?? '',
+                      DateTime.now(),
+                      _selectedMoodString,
+                      _selectedWeather,
+                      [],
+                      _diaryController.text,
+                      _selectedMood);
+                },
+              ),
             ],
           ),
         ),
