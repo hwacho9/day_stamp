@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
@@ -62,13 +63,17 @@ class _MonthlyProgressIndicatorState extends State<MonthlyProgressIndicator> {
         //     valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
         //   ),
         // ),
-        SizedBox(
-          width: 400, // 명시적인 너비 제공
-          height: 50, // 명시적인 높이 제공
-          child: CustomPaint(
-            painter: ThermometerPainter(fillPercentage: fillPercentage),
-          ),
-        ),
+        LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+          double screenWidth = MediaQuery.of(context).size.width;
+          return SizedBox(
+            width: screenWidth * 0.9, // 명시적인 너비 제공
+            height: 50, // 명시적인 높이 제공
+            child: CustomPaint(
+              painter: ThermometerPainter(fillPercentage: fillPercentage),
+            ),
+          );
+        }),
         Icon(
           fillPercentage == 100 ? Icons.check_circle : Icons.circle,
           color: fillPercentage == 100 ? Colors.orange : Colors.grey,

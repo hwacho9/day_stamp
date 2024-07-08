@@ -61,15 +61,15 @@ class _HomePageState extends State<HomePage> {
                 items: const <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
                     icon: Icon(Icons.book),
-                    label: '일기',
+                    label: '日記',
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.calendar_today),
-                    label: '캘린더',
+                    label: 'カレンダー',
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.analytics),
-                    label: '분석',
+                    label: '分析',
                   ),
                 ],
                 currentIndex: _selectedIndex,

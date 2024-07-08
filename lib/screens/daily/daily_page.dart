@@ -103,7 +103,7 @@ class _DailyPageState extends State<DailyPage> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    backgroundColor: Color.fromARGB(255, 228, 165, 185),
+                    backgroundColor: const Color.fromARGB(255, 247, 162, 191),
                   ),
                   onPressed: () {
                     dbService.addEntry(
