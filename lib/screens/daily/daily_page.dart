@@ -6,7 +6,6 @@ import 'package:day_stamp/screens/components/mood_selector.dart';
 import 'package:day_stamp/screens/components/weather_selector.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'package:provider/provider.dart';
 
@@ -86,6 +85,13 @@ class _DailyPageState extends State<DailyPage> {
                       [],
                       _diaryController.text,
                       _selectedMood);
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('保存されました'), // "저장되었습니다" 메시지
+                      duration: Duration(seconds: 2), // 스낵바 지속 시간 설정
+                    ),
+                  );
                 },
               ),
             ],
