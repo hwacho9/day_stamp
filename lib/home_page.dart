@@ -1,4 +1,4 @@
-import 'package:day_stamp/screens/analsis/analysis_page.dart';
+import 'package:day_stamp/screens/analysis/analysis_page.dart';
 import 'package:day_stamp/screens/daily/daily_page.dart';
 import 'package:day_stamp/screens/login_page.dart';
 import 'package:day_stamp/screens/monthly/monthly_page.dart';
@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
           if (snapshot.hasData) {
             return Scaffold(
               appBar: AppBar(
-                title: const Text('Day Stamp'),
+                title: const Text('あにまる日記'),
                 automaticallyImplyLeading: false,
                 actions: <Widget>[
                   IconButton(

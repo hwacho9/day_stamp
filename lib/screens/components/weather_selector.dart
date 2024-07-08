@@ -30,7 +30,7 @@ class _WeatherSelectorState extends State<WeatherSelector> {
       height: 100.0,
       padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
-        color: Colors.grey[200],
+        color: Colors.white,
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Column(
