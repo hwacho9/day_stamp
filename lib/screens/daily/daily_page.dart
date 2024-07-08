@@ -53,7 +53,6 @@ class _DailyPageState extends State<DailyPage> {
                 setState(() {
                   _selectedMood = mood;
                   _selectedMoodString = moodstring;
-                  print(_selectedMoodString);
                   // print(_selectedMood);
                 });
               },

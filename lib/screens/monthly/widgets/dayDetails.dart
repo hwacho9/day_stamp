@@ -7,8 +7,13 @@ class DayDetails {
   final String diary;
   final String emoji;
   final String weather;
+  final String day;
 
-  DayDetails({required this.diary, required this.emoji, required this.weather});
+  DayDetails(
+      {required this.day,
+      required this.diary,
+      required this.emoji,
+      required this.weather});
 }
 
 class DayDetailsComponent {
@@ -28,6 +33,9 @@ class DayDetailsComponent {
         .collection('entries')
         .doc(userId)
         .collection(collectionMonth);
+
+    // Format selectedDay to match the date format in Firestore
+    String formattedDate = "${selectedDay.month}月${selectedDay.day}日";
 
     // 선택된 날짜의 시작 (예: 2023-04-21 00:00:00)
     DateTime startOfDay =
@@ -51,31 +59,41 @@ class DayDetailsComponent {
       var emoji = querySnapshot.docs.first.data()['emojis'] as String? ?? "😊";
       var weather =
           querySnapshot.docs.first.data()['weather'] as String? ?? "Sunny";
-      return DayDetails(diary: diaryEntry, emoji: emoji, weather: weather);
+      return DayDetails(
+          day: formattedDate,
+          diary: diaryEntry,
+          emoji: emoji,
+          weather: weather);
     } else {
       // Return default or placeholder values if no matching document is found
       return DayDetails(
-          diary: "No entry for this day.", emoji: "😊", weather: "Sunny");
+          day: "",
+          diary: "No entry for this day.",
+          emoji: "😊",
+          weather: "Sunny");
     }
   }
 
   static Future<void> showDayDetailsModal(
       BuildContext context, DateTime selectedDay) async {
     final details = await getDayDetails(context, selectedDay);
-    print(details);
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
         return Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
+              Text("${details.day}"),
+              Image.asset(
+                details.emoji,
+                width: 60,
+                height: 60,
+              ),
+              // Text(
+              //     "Weather: ${details.weather}"), //  details 객체의 weather 필드에 접근
               Text("Diary: ${details.diary}"), // details 객체의 필드에 접근
-              Text(
-                  "Emoji: ${details.emoji}"), // 예를 들어, details 객체의 emoji 필드에 접근
-              Text(
-                  "Weather: ${details.weather}"), // 예를 들어, details 객체의 weather 필드에 접근
             ],
           ),
         );
