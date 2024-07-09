@@ -6,8 +6,15 @@ class DatabaseService {
   DatabaseService({FirebaseFirestore? firestore})
       : this.firestore = firestore ?? FirebaseFirestore.instance;
 
-  Future<void> addEntry(String userId, DateTime date, String mood,
-      String weather, List<String> tasks, String diary, String emojis) async {
+  Future<void> addEntry(
+      String userId,
+      DateTime date,
+      String mood,
+      String weather,
+      List<String> tasks,
+      String diary,
+      String emojis,
+      String emojisWeather) async {
     var dateParts = date.toString().split('-');
     var year = dateParts[0];
     var month = dateParts[1];
@@ -24,6 +31,7 @@ class DatabaseService {
       'tasks': tasks,
       'diary': diary,
       'emojis': emojis,
+      'Weatheremojis': emojisWeather,
     });
   }
 }

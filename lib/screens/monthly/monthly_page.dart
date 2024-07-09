@@ -79,7 +79,6 @@ class _MonthlyPageState extends State<MonthlyPage> {
         print("Emoji is null for document: ${doc.id}"); // 이모티콘 데이터 없음 로그
         continue;
       }
-      // print(emoji); //
       if (!events.containsKey(date)) {
         events[date] = [];
       }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class SaveButton extends StatelessWidget {
   final VoidCallback onSave;
 
-  const SaveButton({Key? key, required this.onSave}) : super(key: key);
+  const SaveButton({super.key, required this.onSave});
 
   @override
   Widget build(BuildContext context) {

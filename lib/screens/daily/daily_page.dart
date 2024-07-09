@@ -25,6 +25,7 @@ class _DailyPageState extends State<DailyPage> {
   String _selectedMood = '';
   String _selectedWeather = '';
   String _selectedMoodString = '';
+  String _selectedWeatherString = '';
   TextEditingController _diaryController = TextEditingController();
   DatabaseService dbService = DatabaseService();
   @override
@@ -63,9 +64,10 @@ class _DailyPageState extends State<DailyPage> {
               ),
               const SizedBox(height: 20),
               WeatherSelector(
-                onWeatherSelected: (String weather) {
+                onWeatherSelected: (String weather, String weatherString) {
                   setState(() {
                     _selectedWeather = weather;
+                    _selectedWeatherString = weatherString;
                     // print(_selectedWeather);
                   });
                 },
@@ -81,10 +83,11 @@ class _DailyPageState extends State<DailyPage> {
                       user.currentUser?.uid ?? '',
                       DateTime.now(),
                       _selectedMoodString,
-                      _selectedWeather,
+                      _selectedWeatherString,
                       [],
                       _diaryController.text,
-                      _selectedMood);
+                      _selectedMood,
+                      _selectedWeather);
 
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
